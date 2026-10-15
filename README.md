@@ -4,7 +4,7 @@ An [n8n](https://n8n.io) community node for [Cashly](https://cashly.corenexis.co
 debt tracker by Corenexis. Record expenses and income, manage bank accounts, cards, wallets, EMIs, subscriptions,
 debts and upcoming bills, and start workflows the moment something changes in Cashly.
 
-[Installation](#installation) | [Credentials](#credentials) | [Nodes](#nodes) | [Cashly Trigger](#cashly-trigger) |
+[npm](https://www.npmjs.com/package/@corenexis/n8n-nodes-cashly) | [Installation](#installation) | [Credentials](#credentials) | [Nodes](#nodes) | [Cashly Trigger](#cashly-trigger) |
 [Cashly Polling Trigger](#cashly-polling-trigger) | [Examples](#examples) | [Compatibility](#compatibility) |
 [Resources](#resources)
 
@@ -127,6 +127,8 @@ Built with the n8n node CLI and tested with n8n 1.x and 2.x. Requires a Cashly P
 - [Cashly API documentation](https://cashly.corenexis.com/developer/api)
 - [Cashly webhooks guide](https://cashly.corenexis.com/developer/api#webhooks)
 - [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+- [Changelog](CHANGELOG.md)
+- [Cashly](https://cashly.corenexis.com) and [Corenexis](https://corenexis.com)
 
 ## Support
 
