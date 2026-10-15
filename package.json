@@ -1,6 +1,6 @@
 {
 	"name": "@corenexis/n8n-nodes-cashly",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "n8n community node for Cashly, the expense, EMI and debt tracker by Corenexis: transactions, lend and borrow, accounts, EMIs, subscriptions, upcoming bills, insights and webhooks, with an instant trigger.",
 	"license": "MIT",
 	"homepage": "https://github.com/Core-Nexis/n8n-nodes-cashly#readme",
