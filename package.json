@@ -1,7 +1,7 @@
 {
 	"name": "@corenexis/n8n-nodes-cashly",
 	"version": "0.1.1",
-	"description": "n8n community node for Cashly, the expense, EMI and debt tracker by Corenexis: transactions, lend and borrow, accounts, EMIs, subscriptions, upcoming bills, insights and webhooks, with instant and polling triggers.",
+	"description": "n8n community node for Cashly, the expense, EMI and debt tracker by Corenexis: transactions, lend and borrow, accounts, EMIs, subscriptions, upcoming bills, insights and webhooks, with an instant trigger.",
 	"license": "MIT",
 	"homepage": "https://github.com/Core-Nexis/n8n-nodes-cashly#readme",
 	"keywords": [
@@ -50,8 +50,7 @@
 		],
 		"nodes": [
 			"dist/nodes/Cashly/Cashly.node.js",
-			"dist/nodes/CashlyTrigger/CashlyTrigger.node.js",
-			"dist/nodes/CashlyPollingTrigger/CashlyPollingTrigger.node.js"
+			"dist/nodes/CashlyTrigger/CashlyTrigger.node.js"
 		]
 	},
 	"devDependencies": {

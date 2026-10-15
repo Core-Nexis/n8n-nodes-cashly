@@ -79,7 +79,7 @@ export class CashlyTrigger implements INodeType {
 		properties: [
 			{
 				displayName:
-					'Cashly must be able to reach this n8n instance over public HTTPS. For a local n8n, use the Cashly Polling Trigger instead.',
+					'Cashly must be able to reach this n8n instance over public HTTPS. For an n8n that is not reachable from the internet, use a Schedule Trigger with a Cashly "Get Many" operation instead.',
 				name: 'notice',
 				type: 'notice',
 				default: '',

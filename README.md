@@ -5,7 +5,7 @@ debt tracker by Corenexis. Record expenses and income, manage bank accounts, car
 debts and upcoming bills, and start workflows the moment something changes in Cashly.
 
 [npm](https://www.npmjs.com/package/@corenexis/n8n-nodes-cashly) | [Installation](#installation) | [Credentials](#credentials) | [Nodes](#nodes) | [Cashly Trigger](#cashly-trigger) |
-[Cashly Polling Trigger](#cashly-polling-trigger) | [Examples](#examples) | [Compatibility](#compatibility) |
+[Examples](#examples) | [Compatibility](#compatibility) |
 [Resources](#resources)
 
 ## Installation
@@ -73,7 +73,8 @@ is deactivated. Every request is checked against the webhook's signing secret be
 requests older than 5 minutes are refused.
 
 Cashly must be able to reach your n8n instance over **public HTTPS**. For an n8n running on your own computer,
-use the Cashly Polling Trigger instead.
+use a **Schedule Trigger** with a Cashly **Get Many** operation instead (for example new transactions in the last
+7 days, or upcoming bills).
 
 Each item looks like this:
 
@@ -97,22 +98,12 @@ Each item looks like this:
 `data` is the record after the change (for a `.deleted` event, the record just before it was deleted). Webhooks
 are part of Cashly Pro and Pro Plus. More detail: [Cashly webhooks guide](https://cashly.corenexis.com/developer/api#webhooks).
 
-### Cashly Polling Trigger
-
-Checks Cashly on a schedule (set the interval in the node) and starts the workflow for:
-
-- **New Transaction** (optionally only expenses or only income)
-- **New Lend or Borrow**
-- **Upcoming Bill Due** within a chosen number of days; each bill triggers once
-
-Use it when Cashly cannot reach your n8n, or for reminders about bills that fall due.
-
 ## Examples
 
 - **Expense alert**: Cashly Trigger (`Transaction Created`) > IF amount is over 5,000 > send a message to Slack or
   Telegram.
-- **Bill reminder**: Cashly Polling Trigger (`Upcoming Bill Due`, 3 days ahead) > send an email with the bill name,
-  amount and due date.
+- **Bill reminder**: Schedule Trigger (every morning) > Cashly (Upcoming Bill > Get Many, status pending, due in the
+  next 3 days) > send an email with the bill name, amount and due date.
 - **Log card spends from email**: Gmail Trigger > extract the amount and merchant > Cashly (Transaction > Create,
   payment method `credit_card`).
 - **Monthly summary**: Schedule Trigger (1st of the month) > Cashly (Insight > Get Summary, last month) > send the

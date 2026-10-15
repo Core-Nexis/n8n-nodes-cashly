@@ -5,8 +5,9 @@ All notable changes to `@corenexis/n8n-nodes-cashly` are listed here. Versions f
 
 ## 0.1.1 - 2026-10-15
 
-- First release published from GitHub Actions with npm provenance, as n8n verification requires.
-- Package description and README links updated. No change to the nodes.
+- One Cashly entry in the n8n nodes panel: the Cashly Polling Trigger is removed. Use the instant Cashly Trigger,
+  or a Schedule Trigger with a Cashly "Get Many" operation for an n8n that Cashly cannot reach.
+- Package description and README links updated.
 
 ## 0.1.0 - 2026-10-15
 
