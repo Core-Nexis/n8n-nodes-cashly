@@ -63,6 +63,12 @@ Account settings such as name, email, currency and billing are changed in the Ca
 
 The node can also be used as a tool by n8n AI agents.
 
+**Limits.** Each plan caps transactions per billing period (`429 transaction_limit_exceeded`) and how many debts,
+EMIs and subscriptions can be active at the same time (`403 item_limit_reached`, with `resource`, `limit` and
+`active`). Settling a debt, closing an EMI or pausing a subscription frees a slot. **Profile > Get Usage** returns
+both, the active-item caps under `limits`. Turn on **Continue On Fail** for a workflow that should carry on when a
+limit is reached.
+
 ### Cashly Trigger
 
 Starts the workflow **instantly** when data changes in Cashly. Choose the events, for example
