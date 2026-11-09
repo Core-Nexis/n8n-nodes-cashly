@@ -1,6 +1,7 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { accountsDescription } from './resources/accounts';
 import { billDescription } from './resources/bill';
+import { budgetDescription } from './resources/budget';
 import { debtDescription } from './resources/debt';
 import { emiDescription } from './resources/emi';
 import { insightDescription } from './resources/insight';
@@ -21,7 +22,7 @@ export class Cashly implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
-			'Track expenses, income, lend and borrow, accounts, EMIs, subscriptions and bills in Cashly',
+			'Track expenses, income, budgets, lend and borrow, accounts, EMIs, subscriptions and bills in Cashly',
 		defaults: {
 			name: 'Cashly',
 		},
@@ -66,6 +67,7 @@ export class Cashly implements INodeType {
 				noDataExpression: true,
 				options: [
 					{ name: 'Bank Account', value: 'bank' },
+					{ name: 'Budget', value: 'budget', description: 'Monthly budget plan and month comparison' },
 					{ name: 'Credit Card', value: 'creditCard' },
 					{ name: 'Debit Card', value: 'debitCard' },
 					{ name: 'EMI', value: 'emi', description: 'Loan instalments' },
@@ -87,6 +89,7 @@ export class Cashly implements INodeType {
 			...emiDescription,
 			...subscriptionDescription,
 			...billDescription,
+			...budgetDescription,
 			...insightDescription,
 			...profileDescription,
 			...securityDescription,

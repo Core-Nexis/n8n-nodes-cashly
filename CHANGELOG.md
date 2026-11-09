@@ -3,6 +3,14 @@
 All notable changes to `@corenexis/n8n-nodes-cashly` are listed here. Versions follow
 [semantic versioning](https://semver.org).
 
+## 0.2.0 - 2026-11-09
+
+- New **Budget** resource: Get the monthly budget with this month's spending against it, days left, three-month
+  averages and fixed commitments; Update the total, category limits and warning level; Delete the plan; Compare
+  Months side by side, optionally only the days passed so far.
+- Budget categories follow the plan limits (Always Free 5, Pro 20, Pro Plus 50); over the limit the API answers
+  `403 budget_category_limit`.
+
 ## 0.1.2 - 2026-10-15
 
 - First release published from GitHub Actions with npm provenance, as n8n verification requires. No change to

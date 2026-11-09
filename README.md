@@ -50,6 +50,7 @@ The node supports two ways to sign in. Choose one with the **Authentication** fi
 | EMI | Create, Delete, Get, Get Many, Get Payments, Record Payment, Update (including payment method and account) |
 | Subscription | Create, Delete, Get, Get Many, Get Payments, Record Payment, Update |
 | Upcoming Bill | Get Many, Record Payment, Skip |
+| Budget | Get (plan, spending against it, days left, averages, fixed commitments), Update (total, category limits, warning level), Delete, Compare Months (two months side by side, optionally same days only) |
 | Insight | Get Summary, Get Categories, Get Payment Methods |
 | Profile | Get, Get Billing History, Get Billing Status, Get Usage, Update Timezone, Update Notifications |
 | Security | Get Devices, Get Connected Apps (read only) |
@@ -65,7 +66,8 @@ The node can also be used as a tool by n8n AI agents.
 
 **Limits.** Each plan caps transactions per billing period (`429 transaction_limit_exceeded`) and how many debts,
 EMIs and subscriptions can be active at the same time (`403 item_limit_reached`, with `resource`, `limit` and
-`active`). Settling a debt, closing an EMI or pausing a subscription frees a slot. **Profile > Get Usage** returns
+`active`). Settling a debt, closing an EMI or pausing a subscription frees a slot. Budget category limits are
+per plan too (Always Free 5, Pro 20, Pro Plus 50; `403 budget_category_limit`). **Profile > Get Usage** returns
 both, the active-item caps under `limits`. Turn on **Continue On Fail** for a workflow that should carry on when a
 limit is reached.
 
