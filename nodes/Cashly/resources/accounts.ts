@@ -69,6 +69,15 @@ const FAMILIES: AccountFamily[] = [
 				routing: { send: { type: 'body', property: 'account_label' } },
 			},
 			{
+				displayName: 'Account Last 4 Digits',
+				name: 'accountLast4',
+				type: 'string',
+				default: '',
+				placeholder: '1234',
+				description: 'Last four digits of the account number. Helps match bank messages to this account.',
+				routing: { send: { type: 'body', property: 'account_last4' } },
+			},
+			{
 				displayName: 'Balance',
 				name: 'balance',
 				type: 'number',
@@ -142,6 +151,28 @@ const FAMILIES: AccountFamily[] = [
 				description:
 					'The bank account this card draws from. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 				routing: { send: { type: 'body', property: 'bank_id' } },
+			},
+			{
+				displayName: 'Balance',
+				name: 'balance',
+				type: 'number',
+				typeOptions: { numberPrecision: 2 },
+				default: 0,
+				description: 'Prepaid cards only: the money on the card now',
+				routing: { send: { type: 'body', property: 'balance' } },
+			},
+			{
+				displayName: 'Card Type',
+				name: 'cardType',
+				type: 'options',
+				options: [
+					{ name: 'Debit (Spends From the Linked Bank)', value: 'debit' },
+					{ name: 'Prepaid (Holds Its Own Balance)', value: 'prepaid' },
+				],
+				default: 'debit',
+				description:
+					'A prepaid card keeps its own balance. The type can only change while the card has no entries.',
+				routing: { send: { type: 'body', property: 'card_type' } },
 			},
 			favorite('debit card'),
 		],

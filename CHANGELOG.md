@@ -3,6 +3,20 @@
 All notable changes to `@corenexis/n8n-nodes-cashly` are listed here. Versions follow
 [semantic versioning](https://semver.org).
 
+## 0.3.0 - 2026-11-20
+
+- New **Transfer** resource: Create records money moved between your own accounts (bank, wallet, prepaid card,
+  credit card or cash, including a card bill paid from a bank and card to card balance transfers), with an optional
+  fee and note. Transfers are neither income nor expense.
+- **Bank Account**: Account Last 4 Digits on create and update.
+- **Debit Card**: Card Type (Debit or Prepaid) and Balance for prepaid cards on create and update.
+- **Transaction**: Get Many and Get Totals filter by category, payment method, account and source (Auto tracker,
+  transfers, other). Outputs document `meta.auto` = `"sms"` for Auto tracker entries and `source_type` `transfer`
+  for transfer legs.
+- **Insight**: Get Overview returns the currency, timezone, plan and limits, every account with its kind and ID, the
+  categories and the payment methods in one call.
+- README: transfers, Auto tracker entries and the webhook item shape.
+
 ## 0.2.0 - 2026-11-09
 
 - New **Budget** resource: Get the monthly budget with this month's spending against it, days left, three-month

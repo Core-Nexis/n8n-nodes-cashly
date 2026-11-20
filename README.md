@@ -44,14 +44,15 @@ The node supports two ways to sign in. Choose one with the **Authentication** fi
 
 | Resource | Operations |
 |---|---|
-| Transaction | Create, Delete, Get, Get Many, Get Totals, Update (amount, type, category, date, payment method and account) |
+| Transaction | Create, Delete, Get, Get Many, Get Totals, Update (amount, type, category, date, payment method and account). Get Many and Get Totals filter by period, type, category, payment method, account, source (Auto tracker, transfers, other) and search text |
+| Transfer | Create: money moved between your own accounts (bank, wallet, prepaid card, credit card or cash), with an optional fee and note |
 | Lend and Borrow | Create (with payment method and account), Add Amount, Record Payment, Settle, Unsettle, Update (including direction), Delete, Get, Get Many |
-| Bank Account, Credit Card, Debit Card, Wallet | Create, Delete, Get Many, Update |
+| Bank Account, Credit Card, Debit Card, Wallet | Create, Delete, Get Many, Update. Bank accounts take the last 4 digits of the account number; debit cards are Debit or Prepaid (a prepaid card holds its own balance) |
 | EMI | Create, Delete, Get, Get Many, Get Payments, Record Payment, Update (including payment method and account) |
 | Subscription | Create, Delete, Get, Get Many, Get Payments, Record Payment, Update |
 | Upcoming Bill | Get Many, Record Payment, Skip |
 | Budget | Get (plan, spending against it, days left, averages, fixed commitments), Update (total, category limits, warning level), Delete, Compare Months (two months side by side, optionally same days only) |
-| Insight | Get Summary, Get Categories, Get Payment Methods |
+| Insight | Get Overview (currency, timezone, plan and limits, every account with its kind and ID, categories, payment methods), Get Summary, Get Categories, Get Payment Methods |
 | Profile | Get, Get Billing History, Get Billing Status, Get Usage, Update Timezone, Update Notifications |
 | Security | Get Devices, Get Connected Apps (read only) |
 | Webhook | Create, Delete, Get, Get Many, Get Deliveries, Rotate Secret, Send Test, Update |
@@ -59,6 +60,14 @@ The node supports two ways to sign in. Choose one with the **Authentication** fi
 Payment methods are `cash`, `upi`, `bank`, `credit_card`, `debit_card`, `wallet`, `cheque` and `other`. For a bank
 or card method, choose the account in **Payment Account**; leave it empty and Cashly uses the account marked as
 favourite for that method.
+
+**Transfers** (bank to bank, a wallet top-up, a cash withdrawal, a credit card bill paid from a bank, a card to card
+balance transfer) are saved as two linked transactions with `source_type` `transfer`. They are neither income nor
+expense, so totals, summaries and budgets leave them out. Record them with **Transfer > Create**, not as an expense
+and an income. Deleting either leg removes the whole transfer.
+
+**Auto tracker.** Transactions added by the Cashly Auto tracker (beta, Android) from bank messages carry
+`meta.auto` = `"sms"` in every output and webhook. Filter them with **Source: Auto Tracker (SMS)**.
 
 Account settings such as name, email, currency and billing are changed in the Cashly app only.
 
@@ -98,10 +107,15 @@ Each item looks like this:
     "category": "Food",
     "description": "Lunch",
     "payment_method": "upi",
-    "transaction_date": "2026-10-15T09:11:58.000Z"
+    "source_type": null,
+    "transaction_date": "2026-10-15T09:11:58.000Z",
+    "meta": { "auto": "sms" }
   }
 }
 ```
+
+`meta.auto` is `"sms"` only for entries the Auto tracker added; manual entries have an empty `meta`. A transfer
+sends one `transaction.created` event for each leg, both with `source_type` `transfer` and the same `source_id`.
 
 `data` is the record after the change (for a `.deleted` event, the record just before it was deleted). Webhooks
 are part of Cashly Pro and Pro Plus. More detail: [Cashly webhooks guide](https://cashly.corenexis.com/developer/api#webhooks).

@@ -53,3 +53,29 @@ export async function getBanks(this: ILoadOptionsFunctions): Promise<INodeProper
 	const rows = (response.banks as IDataObject[] | undefined) ?? [];
 	return rows.map((row) => ({ name: row.name as string, value: row.id as string }));
 }
+
+/** Accounts of one transfer endpoint kind; a prepaid card is a debit card with card_type prepaid. */
+async function accountsOfKind(context: ILoadOptionsFunctions, kind: string): Promise<INodePropertyOptions[]> {
+	if (!kind || kind === 'cash') return [];
+	const response = await cashlyApiRequest.call(context, authOf(context), 'GET', '/accounts');
+	const key = kind === 'bank' ? 'banks' : kind === 'wallet' ? 'wallets' : kind === 'credit_card' ? 'credit_cards' : 'debit_cards';
+	const rows = ((response[key] as IDataObject[] | undefined) ?? []).filter(
+		(row) => kind !== 'prepaid' || row.card_type === 'prepaid',
+	);
+	return rows
+		.map((row) => {
+			const last4 = (row.last4 ?? row.account_last4) as string | undefined;
+			return { name: `${row.name as string}${last4 ? ` ****${last4}` : ''}`, value: row.id as string };
+		})
+		.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Accounts for the "From" side of a transfer, filtered by the chosen kind. */
+export async function getFromAccounts(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	return accountsOfKind(this, this.getCurrentNodeParameter('fromKind') as string);
+}
+
+/** Accounts for the "To" side of a transfer, filtered by the chosen kind. */
+export async function getToAccounts(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+	return accountsOfKind(this, this.getCurrentNodeParameter('toKind') as string);
+}

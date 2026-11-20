@@ -19,6 +19,14 @@ export const insightDescription: INodeProperties[] = [
 				routing: { request: { method: 'GET', url: '/categories' } },
 			},
 			{
+				name: 'Get Overview',
+				value: 'getOverview',
+				action: 'Get an account overview',
+				description:
+					'Currency, timezone, plan and limits, every account with its kind and ID, categories and payment methods in one call',
+				routing: { request: { method: 'GET', url: '/overview' } },
+			},
+			{
 				name: 'Get Payment Methods',
 				value: 'getPaymentMethods',
 				action: 'Get payment methods',

@@ -97,7 +97,7 @@ export const transactionDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many transactions',
-				description: 'List transactions, newest first',
+				description: 'List transactions, newest first. Auto tracker entries carry meta.auto = "sms"; transfer legs have source_type "transfer".',
 				routing: {
 					request: { method: 'GET', url: '/transactions' },
 					output: { postReceive: [{ type: 'rootProperty', properties: { property: 'transactions' } }] },
@@ -107,7 +107,7 @@ export const transactionDescription: INodeProperties[] = [
 				name: 'Get Totals',
 				value: 'getTotals',
 				action: 'Get transaction totals',
-				description: 'Total money in and out for a period',
+				description: 'Total money in and out for a period and filters. Transfers are not counted.',
 				routing: {
 					request: { method: 'GET', url: '/transactions' },
 					output: { postReceive: [{ type: 'rootProperty', properties: { property: 'totals' } }] },
@@ -236,6 +236,26 @@ export const transactionDescription: INodeProperties[] = [
 		displayOptions: show(['getAll', 'getTotals']),
 		options: [
 			{
+				displayName: 'Account Name or ID',
+				name: 'methodRefId',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getPaymentAccounts' },
+				default: '',
+				description:
+					'Only entries on this bank, card or wallet. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+				routing: { send: { type: 'query', property: 'method_ref_id' } },
+			},
+			{
+				displayName: 'Category Name or ID',
+				name: 'category',
+				type: 'options',
+				typeOptions: { loadOptionsMethod: 'getCategories' },
+				default: '',
+				description:
+					'Only this category. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+				routing: { send: { type: 'query', property: 'category' } },
+			},
+			{
 				displayName: 'From Date',
 				name: 'from',
 				type: 'dateTime',
@@ -244,12 +264,32 @@ export const transactionDescription: INodeProperties[] = [
 				routing: { send: { type: 'query', property: 'from', value: toCalendarDate } },
 			},
 			{
+				displayName: 'Payment Method',
+				name: 'paymentMethod',
+				type: 'options',
+				options: paymentMethodOptions,
+				default: 'upi',
+				routing: { send: { type: 'query', property: 'payment_method' } },
+			},
+			{
 				displayName: 'Search',
 				name: 'q',
 				type: 'string',
 				default: '',
 				description: 'Text to find in the description, category or payment label',
 				routing: { send: { type: 'query', property: 'q' } },
+			},
+			{
+				displayName: 'Source',
+				name: 'source',
+				type: 'options',
+				options: [
+					{ name: 'Auto Tracker (SMS)', value: 'sms', description: 'Added from bank messages on Android' },
+					{ name: 'Manual and Other', value: 'manual', description: 'Everything except Auto tracker entries and transfers' },
+					{ name: 'Transfers', value: 'transfer', description: 'Legs of transfers between your own accounts' },
+				],
+				default: 'sms',
+				routing: { send: { type: 'query', property: 'source' } },
 			},
 			{
 				displayName: 'To Date',

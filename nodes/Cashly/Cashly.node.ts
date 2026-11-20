@@ -9,8 +9,9 @@ import { profileDescription } from './resources/profile';
 import { securityDescription } from './resources/security';
 import { subscriptionDescription } from './resources/subscription';
 import { transactionDescription } from './resources/transaction';
+import { transferDescription } from './resources/transfer';
 import { webhookDescription } from './resources/webhook';
-import { getBanks, getCategories, getPaymentAccounts } from './shared/loadOptions';
+import { getBanks, getCategories, getFromAccounts, getPaymentAccounts, getToAccounts } from './shared/loadOptions';
 import { CASHLY_BASE_URL, CASHLY_USER_AGENT } from './shared/transport';
 
 export class Cashly implements INodeType {
@@ -22,7 +23,7 @@ export class Cashly implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description:
-			'Track expenses, income, budgets, lend and borrow, accounts, EMIs, subscriptions and bills in Cashly',
+			'Track expenses, income, transfers, budgets, lend and borrow, accounts, EMIs, subscriptions and bills in Cashly',
 		defaults: {
 			name: 'Cashly',
 		},
@@ -77,6 +78,7 @@ export class Cashly implements INodeType {
 					{ name: 'Security', value: 'security', description: 'Signed-in devices and connected apps' },
 					{ name: 'Subscription', value: 'subscription', description: 'Recurring payments' },
 					{ name: 'Transaction', value: 'transaction', description: 'Income and expenses' },
+					{ name: 'Transfer', value: 'transfer', description: 'Money moved between your own accounts' },
 					{ name: 'Upcoming Bill', value: 'upcomingBill' },
 					{ name: 'Wallet', value: 'wallet' },
 					{ name: 'Webhook', value: 'webhook', description: 'Endpoints Cashly notifies when data changes' },
@@ -84,6 +86,7 @@ export class Cashly implements INodeType {
 				default: 'transaction',
 			},
 			...transactionDescription,
+			...transferDescription,
 			...debtDescription,
 			...accountsDescription,
 			...emiDescription,
@@ -101,7 +104,9 @@ export class Cashly implements INodeType {
 		loadOptions: {
 			getBanks,
 			getCategories,
+			getFromAccounts,
 			getPaymentAccounts,
+			getToAccounts,
 		},
 	};
 }
