@@ -145,8 +145,10 @@ Built with the n8n node CLI and tested with n8n 1.x and 2.x. Requires a Cashly P
 
 ## Support
 
-Maintained by [Corenexis](https://corenexis.com). Questions and issues: support@corenexis.com or
-[GitHub issues](https://github.com/Core-Nexis/n8n-nodes-cashly/issues).
+Maintained by [Corenexis](https://corenexis.com). Questions and issues:
+[helpdesk.corenexis.com](https://helpdesk.corenexis.com) or
+[GitHub issues](https://github.com/Core-Nexis/n8n-nodes-cashly/issues). Product website:
+[cashly.corenexis.com](https://cashly.corenexis.com).
 
 ## License
 
